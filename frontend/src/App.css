@@ -1,0 +1,42 @@
+.hero-banner {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #0f172a 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.3);
+}
+
+.stat-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.stat-icon.flights { background: #e0f2fe; color: #0284c7; }
+.stat-icon.airports { background: #fef3c7; color: #d97706; }
+.stat-icon.passengers { background: #dcfce7; color: #16a34a; }
+.stat-icon.bookings { background: #f3e8ff; color: #9333ea; }
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+}

@@ -1,0 +1,76 @@
+// MySQL Prisma Schema for Production / MySQL Server
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Flight {
+  id               Int               @id @default(autoincrement())
+  flightNumber     String            @unique
+  carrierName      String
+  flightModel      String
+  seatCapacity     Int
+  scheduledFlights ScheduledFlight[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model Airport {
+  id              Int      @id @default(autoincrement())
+  airportCode     String   @unique
+  airportName     String
+  airportLocation String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Passenger {
+  id            Int       @id @default(autoincrement())
+  pnrNumber     String    @unique
+  passengerName String
+  passengerAge  Int
+  passengerUIN  String
+  luggage       Float     @default(0.0)
+  bookings      Booking[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Schedule {
+  id                 Int               @id @default(autoincrement())
+  sourceAirport      String
+  destinationAirport String
+  departureTime      DateTime
+  arrivalTime        DateTime
+  scheduledFlights   ScheduledFlight[]
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+model ScheduledFlight {
+  id             Int       @id @default(autoincrement())
+  flightId       Int
+  flight         Flight    @relation(fields: [flightId], references: [id], onDelete: Cascade)
+  scheduleId     Int
+  schedule       Schedule  @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  availableSeats Int
+  bookings       Booking[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Booking {
+  id                Int             @id @default(autoincrement())
+  bookingDate       DateTime        @default(now())
+  ticketCost        Float
+  passengerId       Int
+  passenger         Passenger       @relation(fields: [passengerId], references: [id], onDelete: Cascade)
+  scheduledFlightId Int
+  scheduledFlight   ScheduledFlight @relation(fields: [scheduledFlightId], references: [id], onDelete: Cascade)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
